@@ -12,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/movie/")
+@RequestMapping("/movies/")
 public class MovieController {
     MovieService movieService;
 
@@ -20,10 +20,11 @@ public class MovieController {
         this.movieService = movieService;
     }
 
-    @GetMapping("/exception")
-    void throwException2() throws RuntimeException{
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "tresc_naszego_błędu");
+    @GetMapping()
+    ResponseEntity<ArrayList<Movie>> allMovies(){
+        return ResponseEntity.ok(movieService.getMovies());
     }
+
 
     @GetMapping("/add")
     void addMovies(){
@@ -38,8 +39,11 @@ public class MovieController {
         movieService.addmovie(movie3);
     }
 
-    @GetMapping("/all")
-    ResponseEntity<ArrayList<Movie>> allMovies(){
-        return ResponseEntity.ok(movieService.getMovies());
+    @GetMapping("/exception")
+    void throwException2() throws RuntimeException{
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "tresc_naszego_błędu");
     }
+
+
+
 }
