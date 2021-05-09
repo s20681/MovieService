@@ -1,13 +1,13 @@
 package com.s20681.MovieService.Model;
 
-import org.springframework.data.annotation.Id;
-
-
 public class Movie {
-    private static int idVal = 0;
-    private Integer id;
+    private static Long idVal = (long) 0;
+    private Long id;
     String name;
     String category;
+
+    public Movie() {
+    }
 
     public Movie(String name, String category) {
         this.id = idVal;
@@ -16,11 +16,11 @@ public class Movie {
         this.category = category;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
