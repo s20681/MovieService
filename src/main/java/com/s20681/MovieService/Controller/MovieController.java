@@ -22,24 +22,24 @@ public class MovieController {
     }
 
     @GetMapping()
-    ResponseEntity<ArrayList<Movie>> allMovies(){
+    ResponseEntity<ArrayList<Movie>> allMovies() {
         return ResponseEntity.ok(movieService.getMovies());
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<Movie> movieById(@PathVariable String id){
+    ResponseEntity<Movie> movieById(@PathVariable String id) {
         Movie movie = movieService.getMovie(id);
-        if(movie.getId() != null){
+        if (movie.getId() != null) {
             return ResponseEntity.ok(movie);
         }
         return new ResponseEntity<Movie>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/add")
-    ResponseEntity<String> addMovies(){
-        Movie movie1 = new Movie("Hobbit", "Horror");
-        Movie movie2 = new Movie("Wladca Pierscieni", "Familijne");
-        Movie movie3 = new Movie("Harry Potter", "Kryminał");
+    ResponseEntity<String> addMovies() {
+        Movie movie1 = new Movie(1l, "Hobbit", "Horror");
+        Movie movie2 = new Movie(2l, "Wladca Pierscieni", "Adventure");
+        Movie movie3 = new Movie(3l, "Harry Potter", "Action");
         System.out.println(movie1);
         System.out.println(movie2);
         System.out.println(movie3);
@@ -50,10 +50,7 @@ public class MovieController {
     }
 
     @GetMapping("/exception")
-    void throwException2() throws RuntimeException{
+    void throwException2() throws RuntimeException {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "tresc_naszego_błędu");
     }
-
-
-
 }

@@ -1,19 +1,32 @@
 package com.s20681.MovieService.Model;
 
 public class Movie {
-    private static Long idVal = (long) 0;
     private Long id;
     String name;
-    String category;
+
+    Category category;
+    protected enum Category{
+        Comedy,
+        Thriller,
+        Action,
+        Adventure,
+        Horror,
+        Animated,
+        Documentary,
+        Drama,
+        Fantasy,
+        Crime,
+        Romance,
+        Scifi,
+    }
 
     public Movie() {
     }
 
-    public Movie(String name, String category) {
-        this.id = idVal;
-        idVal++;
+    public Movie(Long id, String name, String category) {
+        this.id = id;
         this.name = name;
-        this.category = category;
+        this.category = Category.valueOf(category);
     }
 
     public Long getId() {
@@ -32,11 +45,11 @@ public class Movie {
         this.name = name;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
