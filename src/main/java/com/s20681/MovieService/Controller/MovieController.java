@@ -1,16 +1,15 @@
 package com.s20681.MovieService.Controller;
 
+import com.s20681.MovieService.Exception.MovieNotFoundException;
 import com.s20681.MovieService.Model.Movie;
 import com.s20681.MovieService.Service.MovieService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/movies")
@@ -22,31 +21,35 @@ public class MovieController {
     }
 
     @GetMapping()
-    ResponseEntity<ArrayList<Movie>> allMovies() {
-        return ResponseEntity.ok(movieService.getMovies());
+    ResponseEntity<List<Movie>> allMovies() {
+        return ResponseEntity.ok((List<Movie>) movieService.getMovies());
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<Movie> movieById(@PathVariable String id) {
-        Movie movie = movieService.getMovie(id);
-        if (movie.getId() != null) {
-            return ResponseEntity.ok(movie);
-        }
-        return new ResponseEntity<Movie>(HttpStatus.NOT_FOUND);
+    ResponseEntity<Movie> movieById(@PathVariable String id) throws MovieNotFoundException {
+        return ResponseEntity.ok(movieService.getMovie(id));
     }
 
-    @GetMapping("/add")
-    ResponseEntity<String> addMovies() {
-        Movie movie1 = new Movie(1l, "Hobbit", "Horror");
-        Movie movie2 = new Movie(2l, "Wladca Pierscieni", "Adventure");
-        Movie movie3 = new Movie(3l, "Harry Potter", "Action");
-        System.out.println(movie1);
-        System.out.println(movie2);
-        System.out.println(movie3);
-        movieService.addmovie(movie1);
-        movieService.addmovie(movie2);
-        movieService.addmovie(movie3);
-        return ResponseEntity.ok("Movies succesfully added.");
+    @GetMapping("/addmany")
+    ResponseEntity<HttpStatus> addMovies(ArrayList<Movie> movieArrayList) {
+        movieService.addMovies(movieArrayList);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PostMapping("/add")
+    ResponseEntity<HttpStatus> addMovie(@RequestBody Movie movie){
+        movieService.addMovie(movie);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PostMapping("/remove/{id}")
+    void removeMovie(@PathVariable String id) throws MovieNotFoundException{
+        movieService.deleteMovie(id);
+    }
+
+    @PostMapping("/add")
+    void updateMovie(@RequestBody Movie movie){
+        movieService.updateMovie(movie);
     }
 
     @GetMapping("/exception")

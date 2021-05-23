@@ -1,24 +1,16 @@
 package com.s20681.MovieService.Model;
 
-public class Movie {
-    private Long id;
-    String name;
 
-    Category category;
-    protected enum Category{
-        Comedy,
-        Thriller,
-        Action,
-        Adventure,
-        Horror,
-        Animated,
-        Documentary,
-        Drama,
-        Fantasy,
-        Crime,
-        Romance,
-        Scifi,
-    }
+import javax.persistence.*;
+
+@Entity
+public class Movie {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
     public Movie() {
     }

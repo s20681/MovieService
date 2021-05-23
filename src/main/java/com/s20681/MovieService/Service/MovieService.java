@@ -1,36 +1,46 @@
 package com.s20681.MovieService.Service;
 
+import com.s20681.MovieService.Exception.MovieNotFoundException;
 import com.s20681.MovieService.Model.Movie;
+import com.s20681.MovieService.Repository.MovieRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class MovieService{
-    ArrayList<Movie> movies;
+    private final MovieRepository movieRepository;
 
-    public MovieService(){
-        this.movies = new ArrayList<>();
+    public MovieService(MovieRepository movieRepository){
+        this.movieRepository = movieRepository;
     }
 
-    public void addmovie(Movie movie){
-        movies.add(movie);
+    public Movie getMovie(String id) throws MovieNotFoundException {
+        Long idLong = Long.parseLong(id);
+        return movieRepository.findById(idLong).orElseThrow(MovieNotFoundException::new);
     }
 
-    public ArrayList<Movie> getMovies() {
-        return movies;
+    public List<Movie> getMovies(){
+        return movieRepository.findAll();
     }
 
-    public Movie getMovie(String id){
-        Optional optional;
-        optional = movies.stream().filter(movie -> movie.getId().equals(Long.valueOf(id))).findFirst();
+    public void addMovie(Movie movie){
+        movieRepository.save(movie);
+    }
 
-        if(optional.isPresent()){
-            return (Movie) optional.get();
-        }else {
-            return new Movie();
+    public void addMovies(ArrayList<Movie> movieArrayList){
+        movieRepository.saveAll(movieArrayList);
+    }
+
+    public void deleteMovie(String id) throws MovieNotFoundException {
+        movieRepository.delete(getMovie(id));
+    }
+
+    public void updateMovie(Movie movie){
+        if(movieRepository.existsById(movie.getId())){
+            movieRepository.save(movie);
         }
-
     }
+
 }
