@@ -25,15 +25,10 @@ public class MovieController {
         return ResponseEntity.ok((List<Movie>) movieService.getMovies());
     }
 
+
     @GetMapping("/{id}")
     ResponseEntity<Movie> movieById(@PathVariable String id) throws MovieNotFoundException {
         return ResponseEntity.ok(movieService.getMovie(id));
-    }
-
-    @GetMapping("/addmany")
-    ResponseEntity<HttpStatus> addMovies(ArrayList<Movie> movieArrayList) {
-        movieService.addMovies(movieArrayList);
-        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PostMapping("/add")
@@ -42,12 +37,18 @@ public class MovieController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @PostMapping("/addmany")
+    ResponseEntity<HttpStatus> addMovies(@RequestBody List<Movie> movies){
+        movieService.addMovies(movies);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
     @PostMapping("/remove/{id}")
     void removeMovie(@PathVariable String id) throws MovieNotFoundException{
         movieService.deleteMovie(id);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/update")
     void updateMovie(@RequestBody Movie movie){
         movieService.updateMovie(movie);
     }

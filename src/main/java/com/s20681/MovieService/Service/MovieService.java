@@ -1,6 +1,9 @@
 package com.s20681.MovieService.Service;
 
+
+
 import com.s20681.MovieService.Exception.MovieNotFoundException;
+import com.s20681.MovieService.Model.Category;
 import com.s20681.MovieService.Model.Movie;
 import com.s20681.MovieService.Repository.MovieRepository;
 import org.springframework.stereotype.Service;
@@ -29,7 +32,7 @@ public class MovieService{
         movieRepository.save(movie);
     }
 
-    public void addMovies(ArrayList<Movie> movieArrayList){
+    public void addMovies(List<Movie> movieArrayList){
         movieRepository.saveAll(movieArrayList);
     }
 
