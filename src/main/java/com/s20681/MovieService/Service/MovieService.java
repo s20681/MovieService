@@ -1,14 +1,11 @@
 package com.s20681.MovieService.Service;
 
 
-
 import com.s20681.MovieService.Exception.MovieNotFoundException;
-import com.s20681.MovieService.Model.Category;
 import com.s20681.MovieService.Model.Movie;
 import com.s20681.MovieService.Repository.MovieRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,6 +40,14 @@ public class MovieService{
     public void updateMovie(Movie movie){
         if(movieRepository.existsById(movie.getId())){
             movieRepository.save(movie);
+        }
+    }
+
+    public void updateMovieAvailability(String id) throws MovieNotFoundException {
+        Long idLong = Long.parseLong(id);
+        if(movieRepository.existsById(idLong)){
+            getMovie(id).setAvailable(true);
+            movieRepository.save(getMovie(id));
         }
     }
 

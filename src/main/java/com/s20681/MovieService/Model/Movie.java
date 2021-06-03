@@ -11,6 +11,7 @@ public class Movie {
     private String name;
     @Enumerated(EnumType.STRING)
     private Category category;
+    private boolean isAvailable;
 
     public Movie() {
     }
@@ -43,6 +44,14 @@ public class Movie {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
     }
 
     @Override

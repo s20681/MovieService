@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -52,6 +51,12 @@ public class MovieController {
     void updateMovie(@RequestBody Movie movie){
         movieService.updateMovie(movie);
     }
+
+    @PostMapping("/{id}/set-available")
+    void movieAvailable(@PathVariable String id) throws MovieNotFoundException{
+        movieService.updateMovieAvailability(id);
+    }
+
 
     @GetMapping("/exception")
     void throwException2() throws RuntimeException {
