@@ -52,11 +52,10 @@ public class MovieController {
         movieService.updateMovie(movie);
     }
 
-    @PostMapping("/{id}/set-available")
+    @PutMapping("/{id}/set-available")
     void movieAvailable(@PathVariable String id) throws MovieNotFoundException{
         movieService.updateMovieAvailability(id);
     }
-
 
     @GetMapping("/exception")
     void throwException2() throws RuntimeException {
